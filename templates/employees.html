@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='homepage.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Employee List</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="header-container">
+                <div class="logo">
+                    <h1>Petrol Pump Management</h1>
+                </div>
+            </div>
+
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="{{ url_for('view_customers') }}">Customers</a>
+                <a href="{{ url_for('view_transactions') }}">Transactions</a>
+                <a href="{{ url_for('view_employees') }}">Employees</a>
+                <a href="{{ url_for('view_pumps') }}">Pumps</a>
+                <a href="{{ url_for('view_delivery_vehicles') }}">Delivery Vehicles</a>
+                <a href="{{ url_for('view_fuels') }}">Fuels</a>
+                <a href="{{ url_for('view_receipts') }}">Receipts</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="back-home-container">
+        <button class="back-button" onclick="window.location.href='{{ url_for('home') }}'">Back to Home</button>
+    </div>
+
+    <main>
+        <div class="container">
+            <h2>Employee List</h2>
+
+
+
+
+            <table style="width: 80%; margin: 20px auto;">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>Role</th>
+                        <th>Salary</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees[start:end] %}
+                    <tr>
+                        <td>{{ employee.EmployeeID }}</td>
+                        <td>{{ employee.Name }}</td>
+                        <td>{{ employee.PhoneNumber }}</td>
+                        <td>{{ employee.Role }}</td>
+                        <td>{{ employee.Salary }}</td>
+                        <td>
+                            <button class="delete" onclick="deleteEmployee({{ employee.EmployeeID }})">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+            <div class="pagination" style="text-align: center; margin-top: 20px;">
+                {% if current_page > 1 %}
+                    <a href="{{ url_for('view_employees', page=current_page - 1) }}">Previous</a>
+                {% endif %}
+                <span> Page {{ current_page }} of {{ total_pages }} </span>
+                {% if current_page < total_pages %}
+                    <a href="{{ url_for('view_employees', page=current_page + 1) }}">Next</a>
+                {% endif %}
+            </div>
+
+             <h2 style="margin-top: 30px;">Add Employee</h2>
+            <form action="{{ url_for('add_employee') }}" method="post" style="text-align: center;">
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="phone" placeholder="Phone Number" required>
+                <input type="text" name="role" placeholder="Role" required>
+                <input type="text" name="salary" placeholder="Salary" required>
+                <button type="submit">Add Employee</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Petrol Pump Management System. All rights reserved.</p>
+    </footer>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

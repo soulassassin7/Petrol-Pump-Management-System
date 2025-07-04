@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petrol Pump Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='homepage.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="static/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>Petrol Pump Management</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="{{ url_for('view_customers') }}">Customers</a>
+                <a href="{{ url_for('view_transactions') }}">Transactions</a>
+                <a href="{{ url_for('view_employees') }}">Employees</a>
+                <a href="{{ url_for('view_pumps') }}">Pumps</a>
+                <a href="{{ url_for('view_delivery_vehicles') }}">Delivery Vehicles</a>
+                <a href="{{ url_for('view_fuels') }}">Fuels</a>
+                <a href="{{ url_for('view_receipts') }}">Receipts</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <h2>Welcome to the Petrol Pump Management System!</h2>
+            <p>Manage your petrol pump operations efficiently and effectively.</p>
+            <div class="button-container">
+                <a href="{{ url_for('view_customers') }}" class="button">View Customers</a>
+                <a href="{{ url_for('view_transactions') }}" class="button">View Transactions</a>
+                <a href="{{ url_for('view_employees') }}" class="button">View Employees</a>
+                <a href="{{ url_for('view_pumps') }}" class="button">View Pumps</a>
+                <a href="{{ url_for('view_delivery_vehicles') }}" class="button">View Delivery Vehicles</a>
+                <a href="{{ url_for('view_fuels') }}" class="button">View Fuels</a>
+                <a href="{{ url_for('view_receipts') }}" class="button">View Receipts</a>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Petrol Pump Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

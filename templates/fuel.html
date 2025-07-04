@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='homepage.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Fuel List</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="header-container">
+                <div class="logo">
+                    <h1>Petrol Pump Management</h1>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="{{ url_for('view_customers') }}">Customers</a>
+                <a href="{{ url_for('view_transactions') }}">Transactions</a>
+                <a href="{{ url_for('view_employees') }}">Employees</a>
+                <a href="{{ url_for('view_pumps') }}">Pumps</a>
+                <a href="{{ url_for('view_delivery_vehicles') }}">Delivery Vehicles</a>
+                <a href="{{ url_for('view_fuels') }}">Fuels</a>
+                <a href="{{ url_for('view_receipts') }}">Receipts</a>
+            </div>
+        </nav>
+    </header>
+    <div class="back-home-container">
+        <button class="back-button" onclick="window.location.href='{{ url_for('home') }}'">Back to Home</button>
+    </div>
+    <main>
+        <div class="container">
+            <h2>Fuels</h2>
+            <table style="width: 80%; margin: 0 auto;">
+                <thead>
+                    <tr>
+                        <th>Fuel ID</th>
+                        <th>Fuel Type</th>
+                        <th>Price Per Liter</th>
+                        <th>Stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for fuel in fuels %}
+                    <tr>
+                        <td>{{ fuel.FuelID }}</td>
+                        <td>{{ fuel.FuelType }}</td>
+                        <td>{{ fuel.PricePerLiter }}</td>
+                        <td>{{ fuel.Stock }}</td>
+                        <td>
+                            <button class="delete" onclick="deleteFuel({{ fuel.FuelID }})">Delete</button>
+                            <button class="modify" onclick="modifyFuel({{ fuel.FuelID }}, {{ fuel.Stock }})">Modify</button>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <h2 style="margin-top: 30px;">Add Fuel</h2>
+            <form action="{{ url_for('add_fuel') }}" method="post" style="text-align: center;">
+                <input type="text" name="fuel_type" placeholder="Fuel Type" required>
+                <input type="number" step="0.01" name="price_per_liter" placeholder="Price Per Liter" required>
+                <input type="number" name="stock" placeholder="Stock" required>
+                <button type="submit">Add Fuel</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Petrol Pump Management System. All rights reserved.</p>
+    </footer>
+
+<div id="modifyModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Modify Fuel</h2>
+        <form id="modifyForm">
+            <label for="new_stock">New Stock:</label>
+            <input type="number" id="new_stock" name="new_stock" required>
+            <br>
+            <label for="new_price">New Price Per Liter:</label>
+            <input type="number" id="new_price" name="new_price" step="0.01" required>
+            <br>
+            <button type="submit">Update</button>
+        </form>
+    </div>
+</div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
